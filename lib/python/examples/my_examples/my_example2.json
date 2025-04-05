@@ -1,0 +1,111 @@
+{
+    "name": "mnist_hierarchical",
+    "topology": {
+        "aggregators": [
+            {
+                "name": "square",
+                "role": "aggregator",
+                "realm": "default/square",
+                "taskid": "square_agg_123",
+                "channels": ["param-channel-square"]
+            },
+            {
+                "name": "triangle",
+                "role": "aggregator",
+                "realm": "default/triangle",
+                "taskid": "triangle_agg_123",
+                "channels": ["param-channel-triangle"]
+            },
+            {
+                "name": "semicircle",
+                "role": "aggregator",
+                "realm": "default/semicircle",
+                "taskid": "semicircle_agg_123",
+                "channels": ["param-channel-semicircle"]
+            }
+        ],
+        "trainers": [
+            {
+                "name": "trainer1",
+                "role": "trainer",
+                "realm": "default/trainers/1",
+                "taskid": "trainer_123_1",
+                "channels": ["param-channel-square", "param-channel-triangle", "param-channel-semicircle"]
+            }
+        ]
+    },
+    "channels": [
+        {
+            "name": "param-channel-square",
+            "description": "Channel for square aggregator",
+            "pair": ["trainer", "aggregator"],
+            "groupBy": {
+                "type": "tag",
+                "value": ["default"]
+            },
+            "funcTags": {
+                "aggregator": ["distribute", "aggregate"],
+                "trainer": ["fetch", "upload"]
+            }
+        },
+        {
+            "name": "param-channel-triangle",
+            "description": "Channel for triangle aggregator",
+            "pair": ["trainer", "aggregator"],
+            "groupBy": {
+                "type": "tag",
+                "value": ["default"]
+            },
+            "funcTags": {
+                "aggregator": ["distribute", "aggregate"],
+                "trainer": ["fetch", "upload"]
+            }
+        },
+        {
+            "name": "param-channel-semicircle",
+            "description": "Channel for semicircle aggregator",
+            "pair": ["trainer", "aggregator"],
+            "groupBy": {
+                "type": "tag",
+                "value": ["default"]
+            },
+            "funcTags": {
+                "aggregator": ["distribute", "aggregate"],
+                "trainer": ["fetch", "upload"]
+            }
+        }
+    ],
+    "defaults": {
+        "hyperparameters": {
+            "batchSize": 32,
+            "learningRate": 0.01,
+            "rounds": 20
+        },
+        "backend": "p2p",
+        "brokers": [
+            {
+                "host": "localhost",
+                "sort": "mqtt"
+            },
+            {
+                "host": "localhost:10104",
+                "sort": "p2p"
+            }
+        ],
+        "dataset": "https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz",
+        "dependencies": ["numpy >= 1.2.0"],
+        "optimizer": {
+            "sort": "fedavg",
+            "kwargs": {}
+        },
+        "selector": {
+            "sort": "default",
+            "kwargs": {}
+        },
+        "maxRunTime": 300,
+        "registry": {
+            "sort": "dummy",
+            "uri": ""
+        }
+    }
+}

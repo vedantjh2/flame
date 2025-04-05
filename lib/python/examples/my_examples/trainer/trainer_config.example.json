@@ -1,0 +1,136 @@
+{
+    "taskid": "trainer_${TRAINER_ID}",
+    "backend": "p2p",
+    "brokers": [
+      {
+        "host": "localhost",
+        "sort": "mqtt"
+      },
+      {
+        "host": "localhost:10104",
+        "sort": "p2p"
+      }
+    ],
+    "groupAssociation": {
+      "param-channel-square": "default",
+      "param-channel-triangle": "default",
+      "param-channel-semicircle": "default"
+    },
+    "channels": [
+      {
+        "description": "Model update for square aggregator",
+        "groupBy": {
+          "type": "tag",
+          "value": [
+            "default"
+          ]
+        },
+        "name": "param-channel-square",
+        "pair": [
+          "trainer",
+          "aggregator"
+        ],
+        "funcTags": {
+          "aggregator": [
+            "distribute",
+            "aggregate"
+          ],
+          "trainer": [
+            "fetch",
+            "upload"
+          ]
+        }
+      },
+      {
+        "description": "Model update for triangle aggregator",
+        "groupBy": {
+          "type": "tag",
+          "value": [
+            "default"
+          ]
+        },
+        "name": "param-channel-triangle",
+        "pair": [
+          "trainer",
+          "aggregator"
+        ],
+        "funcTags": {
+          "aggregator": [
+            "distribute",
+            "aggregate"
+          ],
+          "trainer": [
+            "fetch",
+            "upload"
+          ]
+        }
+      },
+      {
+        "description": "Model update for semicircle aggregator",
+        "groupBy": {
+          "type": "tag",
+          "value": [
+            "default"
+          ]
+        },
+        "name": "param-channel-semicircle",
+        "pair": [
+          "trainer",
+          "aggregator"
+        ],
+        "funcTags": {
+          "aggregator": [
+            "distribute",
+            "aggregate"
+          ],
+          "trainer": [
+            "fetch",
+            "upload"
+          ]
+        }
+      }
+    ],
+    "dataset": "https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz",
+    "dependencies": [
+      "numpy >= 1.2.0"
+    ],
+    "hyperparameters": {
+      "batchSize": 32,
+      "learningRate": 0.01,
+      "rounds": 5
+    },
+    "baseModel": {
+      "name": "mnist_trainer",
+      "version": 1
+    },
+    "job": [
+      {
+        "id": "${JOB_ID_SQUARE}",
+        "name": "mnist_square"
+      },
+      {
+        "id": "${JOB_ID_TRIANGLE}",
+        "name": "mnist_triangle"
+      },
+      {
+        "id": "${JOB_ID_SEMICIRCLE}",
+        "name": "mnist_semicircle"
+      }
+    ],
+    "registry": {
+      "sort": "dummy",
+      "uri": ""
+    },
+    "selector": {
+      "sort": "default",
+      "kwargs": {}
+    },
+    "optimizer": {
+      "sort": "fedavg",
+      "kwargs": {}
+    },
+    "maxRunTime": 300,
+    "realm": "default/us/west",
+    "role": "trainer"
+  }
+  

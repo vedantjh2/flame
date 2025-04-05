@@ -1,0 +1,76 @@
+{
+    "name": "mnist_fl_topology",
+    "description": "MNIST federated learning topology with 3 aggregators and 10 trainers",
+    "roles": [
+        {
+            "name": "trainer",
+            "description": "Consumes MNIST data and trains local model",
+            "isDataConsumer": true
+        },
+        {
+            "name": "square_aggregator",
+            "description": "Square aggregator that collects updates from trainers",
+            "isDataConsumer": false
+        },
+        {
+            "name": "triangle_aggregator",
+            "description": "Triangle aggregator that collects updates from trainers",
+            "isDataConsumer": false
+        },
+        {
+            "name": "semicircle_aggregator",
+            "description": "Semicircle aggregator that collects updates from trainers",
+            "isDataConsumer": false
+        }
+    ],
+    "channels": [
+        {
+            "name": "square-channel",
+            "description": "Channel between trainers and square aggregator",
+            "pair": [
+                "trainer",
+                "square_aggregator"
+            ],
+            "groupBy": {
+                "type": "tag",
+                "value": ["group1", "group2", "group3", "group4"]
+            },
+            "funcTags": {
+                "trainer": ["fetch", "upload"],
+                "square_aggregator": ["distribute", "aggregate"]
+            }
+        },
+        {
+            "name": "triangle-channel", 
+            "description": "Channel between trainers and triangle aggregator",
+            "pair": [
+                "trainer",
+                "triangle_aggregator"
+            ],
+            "groupBy": {
+                "type": "tag",
+                "value": ["group1", "group2", "group3"]
+            },
+            "funcTags": {
+                "trainer": ["fetch", "upload"],
+                "triangle_aggregator": ["distribute", "aggregate"]
+            }
+        },
+        {
+            "name": "semicircle-channel",
+            "description": "Channel between trainers and semicircle aggregator",
+            "pair": [
+                "trainer",
+                "semicircle_aggregator"
+            ],
+            "groupBy": {
+                "type": "tag",
+                "value": ["group1", "group2", "group3"]
+            },
+            "funcTags": {
+                "trainer": ["fetch", "upload"],
+                "semicircle_aggregator": ["distribute", "aggregate"]
+            }
+        }
+    ]
+}
