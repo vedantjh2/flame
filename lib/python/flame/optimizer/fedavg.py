@@ -39,10 +39,10 @@ class FedAvg(AbstractOptimizer):
             self.aggregate_fn = self._aggregate_pytorch
         elif ml_framework_in_use == MLFramework.TENSORFLOW:
             self.aggregate_fn = self._aggregate_tensorflow
-        else:
-            raise NotImplementedError(
-                "supported ml framework not found; "
-                f"supported frameworks are: {valid_frameworks}")
+        # else:
+        #     raise NotImplementedError(
+        #         "supported ml framework not found; "
+        #         f"supported frameworks are: {valid_frameworks}")
         
         self.regularizer = Regularizer()
 

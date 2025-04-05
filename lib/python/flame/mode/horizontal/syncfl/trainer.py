@@ -88,11 +88,11 @@ class Trainer(Role, metaclass=ABCMeta):
         self._work_done = False
 
         self.framework = get_ml_framework_in_use()
-        if self.framework == MLFramework.UNKNOWN:
-            raise NotImplementedError(
-                "supported ml framework not found; "
-                f"supported frameworks are: {valid_frameworks}"
-            )
+        # if self.framework == MLFramework.UNKNOWN:
+        #     raise NotImplementedError(
+        #         "supported ml framework not found; "
+        #         f"supported frameworks are: {valid_frameworks}"
+        #     )
 
         if self.framework == MLFramework.PYTORCH:
             self._delta_weights_fn = delta_weights_pytorch

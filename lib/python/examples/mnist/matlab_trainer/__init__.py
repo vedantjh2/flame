@@ -1,4 +1,4 @@
-# Copyright 2022 Cisco Systems, Inc. and its affiliates
+# Copyright 2023 Cisco Systems, Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,18 +13,3 @@
 # limitations under the License.
 #
 # SPDX-License-Identifier: Apache-2.0
-
-import logging
-import os
-import sys
-
-log_path = '/tmp/flame-job.log' #change to local dir
-
-logging.basicConfig(
-    level=getattr(logging, os.getenv('LOG_LEVEL', 'INFO')),
-    format=
-    '%(asctime)s | %(filename)s:%(lineno)d | %(levelname)s | %(threadName)s | %(funcName)s | %(message)s',
-    handlers=[
-        logging.FileHandler(log_path),
-        logging.StreamHandler(sys.stdout)
-    ])

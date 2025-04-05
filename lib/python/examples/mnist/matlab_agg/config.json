@@ -40,14 +40,13 @@
             }
         }
     ],
-    "dataset": "https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz",
     "dependencies": [
         "numpy >= 1.2.0"
     ],
     "hyperparameters": {
-        "batchSize": 32,
-        "learningRate": 0.01,
-        "rounds": 20
+        "feedrate": 75,
+        "acceleration": 4500,
+        "rounds": 30
     },
     "baseModel": {
         "name": "",

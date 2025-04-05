@@ -103,16 +103,16 @@ class TopAggregator(Role, metaclass=ABCMeta):
         ).aggregator_data_sampler
 
         self._round = 1
-        self._rounds = 1
+        # self._rounds = 5
         self._rounds = self.config.hyperparameters.rounds
         self._work_done = False
 
         self.framework = get_ml_framework_in_use()
-        if self.framework == MLFramework.UNKNOWN:
-            raise NotImplementedError(
-                "supported ml framework not found; "
-                f"supported frameworks are: {valid_frameworks}"
-            )
+        # if self.framework == MLFramework.UNKNOWN:
+        #     raise NotImplementedError(
+        #         "supported ml framework not found; "
+        #         f"supported frameworks are: {valid_frameworks}"
+        #     )
 
     def get(self, tag: str) -> None:
         """Get data from remote role(s)."""
@@ -216,6 +216,7 @@ class TopAggregator(Role, metaclass=ABCMeta):
 
     def inform_end_of_training(self) -> None:
         """Inform all the trainers that the training is finished."""
+        print(f"ending training with rounds as {self._round} work:{self._work_done}")
         channel = self.cm.get_by_tag(self.dist_tag)
         if not channel:
             logger.debug(f"channel not found for tag {self.dist_tag}")
